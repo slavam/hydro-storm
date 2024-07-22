@@ -1,7 +1,9 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
 import logo from './components/images/logo2015_2.png';
 // import './App.css';
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
+import { InputStorm } from './features/storm/inputStorm';
 
 function App() {
   const url = window.location.href
@@ -11,12 +13,12 @@ function App() {
       <Navbar bg='primary' data-bs-theme='dark' expand='lg'>
         <Container>
           <Navbar.Brand href='#home'>
-            <img src={logo} width={50} height={50} alt='UGMS logo'/>{'     '}
+            <img src={logo} width={50} height={50} alt='UGMS logo'/>{' '}
             Гидрометцентр ДНР
           </Navbar.Brand>
         </Container>
       </Navbar>
-      <h1>Сведения о стихийных гидрологических явлениях</h1>
+      <InputStorm postCode={postCode} />
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
