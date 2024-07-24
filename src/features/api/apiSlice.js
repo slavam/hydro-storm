@@ -6,10 +6,17 @@ export const apiSlice = createApi({
   tagTypes: ['HydroStorm'],
   endpoints: (builder)=>({
     saveHydroStorm: builder.query({
-      query: ()=>'http://localhost:3001/conservations/save_hydro_storm',
+      query: (hydroData)=>{
+        let s=''
+        let url = window.location.href
+        let ipAddress = ((url.indexOf('localhost')>-1) || (url.indexOf('//10.54')>-1))? '10.54.1.11:8083':'31.133.32.14:8083'
+        Object.keys(hydroData).forEach(key=>{s+=`${key}=${hydroData[key]}&`})
+        return `http://${ipAddress}/conservations/save_hydro_storm?node=no-cors&${s.slice(0,-1)}`
+        // return `http://localhost:3001/conservations/save_hydro_storm?mode=opaque&${s.slice(0,-1)}`
+      },
       providesTags: ['HydroStorm']
     })
   }),
 })
 
-export const {useSaveHydroStormQurey} = apiSlice
+export const {useSaveHydroStormQuery} = apiSlice
