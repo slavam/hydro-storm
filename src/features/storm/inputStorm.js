@@ -23,7 +23,7 @@ export const InputStorm = ({postCode})=>{
   let today = new Date()
   const [obsDate, setObsDate] = useState(today.toISOString().slice(0,10))
   let currDay = obsDate.slice(8,10)
-  const [obsHour, setObsHour] = useState('00')
+  const [obsHour, setObsHour] = useState('08')
   const [key, setKey] = useState('01')
   const [waterLevel, setWaterLevel] = useState(null)
   const [waterLevelDeviation, setWaterLevelDeviation] = useState(null)
@@ -91,9 +91,9 @@ export const InputStorm = ({postCode})=>{
     setTelegram(newText)
   }
   const obsHourChanged=e=>{
-    let oh = e.target.value
+    let oh = +e.target.value>9? e.target.value : '0'+e.target.value
     setObsHour(oh)
-    oh = +oh>9? oh : '0'+oh
+    // oh = +oh>9? oh : '0'+oh
     let newText = telegram.slice(0,13)+oh+telegram.slice(15)
     setTelegram(newText)
   }
@@ -114,6 +114,8 @@ export const InputStorm = ({postCode})=>{
         ipChar[0]=ipAddon[0]=wbChar[0]=wbAddon[0]=null
         setWaterLevel(null)
         setWaterLevelDeviation(null)
+        setDurationPrecipitation(0)
+        setPrecipitation('000')
         newText = newText.slice(0,22)+' 00000='
         break
       default:
