@@ -177,7 +177,7 @@ export const InputStorm = ({postCode})=>{
   const newG5 = k=>{
     let start151 = telegram.indexOf(' 5')
     let allG5 = combineG5()
-    return telegram.slice(0,start151)+combineG5()+telegram.slice(start151+allG5.length+k*6)
+    return start151>0? telegram.slice(0,start151)+combineG5()+telegram.slice(start151+allG5.length+k*6):telegram
   }
   const showGroup15=()=>{
     ipChar[0] = 11
@@ -193,8 +193,11 @@ export const InputStorm = ({postCode})=>{
   }
   const hideGroup15=()=>{
     ipChar[0] = ipAddon[0] = null
-    let newText = telegram.replace(/ 5..../g,'')
-    setTelegram(newText)
+    if(telegram.indexOf(' 5')>0){
+      let newText = telegram.replace(/ 5..../g,'')
+      setTelegram(newText)
+    }
+    filterKeys(2,6)
   }
   const group5Jsx=(id,ipChange,iiChange)=>{
     return(<Form.Group className="mb-3" >
@@ -228,6 +231,7 @@ export const InputStorm = ({postCode})=>{
   const hideGroup152=()=>{
     ipChar[1] = ipAddon[1] = null
     setTelegram(newG5(1))
+    filterKeys(3,6)
   }
   const showGroup153=()=>{
     ipChar[2] = 11
@@ -237,6 +241,7 @@ export const InputStorm = ({postCode})=>{
   const hideGroup153=()=>{
     ipChar[2] = ipAddon[2] = null
     setTelegram(newG5(1))
+    filterKeys(4,6)
   }
   const showGroup154=()=>{
     ipChar[3] = 11
@@ -246,6 +251,7 @@ export const InputStorm = ({postCode})=>{
   const hideGroup154=()=>{
     ipChar[3] = ipAddon[3] = null
     setTelegram(newG5(1))
+    filterKeys(5,6)
   }
   const showGroup155=()=>{
     ipChar[4] = 11
@@ -267,7 +273,7 @@ export const InputStorm = ({postCode})=>{
   const changeG6=(k)=>{
     let allG6 = combineG6()
     let start16 = telegram.indexOf(' 6')
-    return telegram.slice(0,start16)+allG6+telegram.slice(start16+allG6.length+k*6)
+    return start16>0? telegram.slice(0,start16)+allG6+telegram.slice(start16+allG6.length+k*6) : telegram
   }
   const showGroup16=()=>{
     wbChar[0] = '00'
@@ -281,10 +287,17 @@ export const InputStorm = ({postCode})=>{
     let newText = telegram.slice(0,start16)+g6+telegram.slice(start16)
     setTelegram(newText)
   }
+  const filterKeys = (from,to)=>{
+    let res = activeKeys.filter(k => +k<=from || +k>to)
+    setActiveKeys(res)
+  }
   const hideGroup16=()=>{
     wbChar[0] = wbAddon[0] = null
-    let newText = telegram.replace(/ 6..../g,'')
-    setTelegram(newText)
+    if(telegram.indexOf(' 6')>0){
+      let newText = telegram.replace(/ 6..../g,'')
+      setTelegram(newText)
+    }
+    filterKeys(7,11)
   }
   const group6Jsx = (id,wbChange,wbiChange)=>{
     return(<Form.Group className="mb-3" >
@@ -317,6 +330,7 @@ export const InputStorm = ({postCode})=>{
   const hideGroup162=()=>{
     wbChar[1] = wbAddon[1] = null
     setTelegram(changeG6(1))
+    filterKeys(8,11)
   }
   const showGroup163=()=>{
     wbChar[2]=wbAddon[2] = '00'
@@ -325,6 +339,7 @@ export const InputStorm = ({postCode})=>{
   const hideGroup163=()=>{
     wbChar[2]=wbAddon[2] = null
     setTelegram(changeG6(1)) //'hide'))
+    filterKeys(9,11)
   }
   const showGroup164=()=>{
     wbChar[3]=wbAddon[3]='00'
@@ -333,6 +348,7 @@ export const InputStorm = ({postCode})=>{
   const hideGroup164=()=>{
     wbChar[3]=ipAddon[3]= null
     setTelegram(changeG6(1)) //'hide'))
+    filterKeys(10,11)
   }
   const showGroup165=()=>{
     wbChar[4]=wbAddon[4] = '00'
@@ -352,17 +368,17 @@ export const InputStorm = ({postCode})=>{
             <Accordion.Header>Экземпляр 2</Accordion.Header>
             <Accordion.Body onEnter={showGroup152} onExited={hideGroup152}>
               {group5Jsx('t1g52',ipCodeChanged,iiCodeChanged)}
-              <Accordion>
+              <Accordion alwaysOpen activeKey={activeKeys}  onSelect={handleSelect}>
                 <Accordion.Item eventKey="4">
                   <Accordion.Header>Экземпляр 3</Accordion.Header>
                   <Accordion.Body onEnter={showGroup153} onExited={hideGroup153}>
                     {group5Jsx('t1g53',ipCodeChanged,iiCodeChanged)}
-                    <Accordion>
+                    <Accordion alwaysOpen activeKey={activeKeys}  onSelect={handleSelect}>
                       <Accordion.Item eventKey="5">
                         <Accordion.Header>Экземпляр 4</Accordion.Header>
                         <Accordion.Body onEnter={showGroup154} onExited={hideGroup154}>
                           {group5Jsx('t1g54',ipCodeChanged,iiCodeChanged)}
-                          <Accordion>
+                          <Accordion alwaysOpen activeKey={activeKeys}  onSelect={handleSelect}>
                             <Accordion.Item eventKey="6">
                               <Accordion.Header>Экземпляр 5</Accordion.Header>
                               <Accordion.Body onEnter={showGroup155} onExited={hideGroup155}>
@@ -387,22 +403,22 @@ export const InputStorm = ({postCode})=>{
       <Accordion.Header>Состояние водного объекта (Группа 6)</Accordion.Header>
       <Accordion.Body onEnter={showGroup16} onExited={hideGroup16}>
         {group6Jsx('t1g61',wb1CodeChanged,wbi1CodeChanged)}
-        <Accordion>
+        <Accordion alwaysOpen activeKey={activeKeys}  onSelect={handleSelect}>
           <Accordion.Item eventKey="8">
             <Accordion.Header>Экземпляр 2</Accordion.Header>
             <Accordion.Body onEnter={showGroup162} onExited={hideGroup162}>
               {group6Jsx('t1g62',wb1CodeChanged,wbi1CodeChanged)}
-              <Accordion>
+              <Accordion alwaysOpen activeKey={activeKeys}  onSelect={handleSelect}>
                 <Accordion.Item eventKey="9">
                   <Accordion.Header>Экземпляр 3</Accordion.Header>
                   <Accordion.Body onEnter={showGroup163} onExited={hideGroup163}>
                     {group6Jsx('t1g63',wb1CodeChanged,wbi1CodeChanged)}
-                    <Accordion>
+                    <Accordion alwaysOpen activeKey={activeKeys}  onSelect={handleSelect}>
                       <Accordion.Item eventKey="10">
                         <Accordion.Header>Экземпляр 4</Accordion.Header>
                         <Accordion.Body onEnter={showGroup164} onExited={hideGroup164}>
                           {group6Jsx('t1g64',wb1CodeChanged,wbi1CodeChanged)}
-                          <Accordion>
+                          <Accordion alwaysOpen activeKey={activeKeys}  onSelect={handleSelect}>
                             <Accordion.Item eventKey="11">
                               <Accordion.Header>Экземпляр 5</Accordion.Header>
                               <Accordion.Body onEnter={showGroup165} onExited={hideGroup165}>
@@ -503,6 +519,7 @@ export const InputStorm = ({postCode})=>{
   return(
     <section>
       <h2>Сведения о стихийных гидрологических явлениях</h2>
+      {/* <h3>{activeKeys}</h3> */}
       {content}
     </section>
   )
